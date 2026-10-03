@@ -1,0 +1,25 @@
+import { chromium } from 'playwright';
+const errs = [];
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' + (process.env.CHR || '') });
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, acceptDownloads: true });
+const p = await ctx.newPage();
+p.on('pageerror', e => errs.push(e.message)); p.on('console', m => m.type() === 'error' && errs.push(m.text()));
+const S = n => p.screenshot({ path: `${process.env.SHOTS}/m-${n}.png` });
+await p.goto('http://localhost:8080/'); await p.waitForSelector('#wizNext');
+await S('wiz1');
+for (let i = 0; i < 4; i++) { await p.click('#wizNext'); await p.waitForTimeout(250); }
+await S('wiz-accounts');
+await p.setInputFiles('#wFile', 'cba.csv'); await p.waitForSelector('#impGo'); await p.waitForTimeout(200); await S('import');
+await p.fill('#naName', 'CommBank everyday'); await p.click('#impGo'); await p.waitForTimeout(400);
+await p.click('#wizNext'); await p.waitForTimeout(250);
+await p.fill('#wPin', 'secret123'); await p.fill('#wPin2', 'secret123'); await p.click('#wizNext'); await p.waitForTimeout(1500);
+await p.click('#wizNext'); await p.waitForTimeout(500); await S('briefing');
+await p.reload(); await p.waitForSelector('#lockPw'); await S('lock');
+await p.fill('#lockPw', 'wrong'); await p.click('#lockForm button[type=submit]'); await p.waitForTimeout(1500);
+console.log('wrong pw msg:', await p.textContent('#lockErr'));
+await p.fill('#lockPw', 'secret123'); await p.click('#lockForm button[type=submit]'); await p.waitForTimeout(1500);
+await p.click('.nav[data-view="personal"]').catch(()=>{}); await p.waitForTimeout(300); await S('personal');
+console.log('tx count:', await p.evaluate(async () => (await import('./js/store.js')).state.tx.map(t => t.date + ' ' + t.amount + ' ' + t.cat).join(' | ')));
+console.log('acct:', await p.evaluate(async () => JSON.stringify((await import('./js/store.js')).state.accounts.map(a => [a.name, a.balance, a.balanceDate]))));
+console.log('errors:', errs.length ? errs.join('\n') : 'none');
+await b.close();
