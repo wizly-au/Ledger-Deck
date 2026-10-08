@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Leave tests out of the site
-        run: rm -rf test .github
+        run: rm -rf test scripts .github
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

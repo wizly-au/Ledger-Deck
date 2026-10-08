@@ -424,3 +424,7 @@ a.cta{display:inline-flex;align-items:center}
 .kpi.panel{min-height:0}
 @media (max-width:760px){.top .chip.local{display:none}.top{gap:6px}.sheet{width:100%}}
 @media print{.rail,.top,.fab,.ask,.sheet,.sheet-bg{display:none!important}.app{display:block}}
+/* embedded in another website: the host page supplies the frame, so keep chrome compact */
+body.embedded .rail .foot{font-size:11px}
+body.embedded .top #fullApp{text-decoration:none}
+@media (max-width:760px){body.embedded .top #fullApp{display:none}}

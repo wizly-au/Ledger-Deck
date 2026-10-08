@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ledger Deck embed demo</title>
+<style>
+  body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#fafaf8;color:#1b1b1a}
+  header{padding:20px 24px;border-bottom:1px solid #e4e3df;display:flex;gap:16px;align-items:center}
+  header b{font-size:18px} nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+  nav button{border:1px solid #d6d5d0;background:#fff;border-radius:8px;padding:6px 10px;font:inherit;font-size:14px;cursor:pointer}
+  main{max-width:1280px;margin:0 auto;padding:24px 16px 48px}
+  h1{font-size:28px;margin:0 0 6px} p{margin:0 0 20px;color:#55544f}
+</style>
+<script src="ledger-deck.js" defer></script>
+</head>
+<body>
+<header><b>Your website</b><nav aria-label="Jump to a screen"><button data-v="briefing">Briefing</button><button data-v="personal">Personal</button><button data-v="business">Business</button><button data-v="tax">Tax</button></nav></header>
+<main>
+  <h1>Money dashboard</h1>
+  <p>This is how Ledger Deck looks inside a host page. Each visitor's records stay in their own browser.</p>
+  <ledger-deck id="deck" height="820" accent="#2a78d6"></ledger-deck>
+  <p id="now" style="margin-top:12px;font-size:14px"></p>
+</main>
+<script>
+  const deck = document.getElementById('deck');
+  document.querySelectorAll('nav button').forEach(b => b.onclick = () => deck.go(b.dataset.v));
+  deck.addEventListener('ledger-deck:view', e => { document.getElementById('now').textContent = 'Showing: ' + e.detail.view; });
+</script>
+</body>
+</html>
