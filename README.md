@@ -37,9 +37,13 @@ npx http-server -p 8080 -c-1 .
 
 Then open http://localhost:8080. It installs as an app (PWA) and works offline.
 
+## Put it on your website
+
+The `embed/` folder has a drop-in `<ledger-deck>` element and a React/Next.js component. See [embed/README.md](embed/README.md).
+
 ## Tests
 
-`test/smoke.mjs` walks every screen with sample data. `test/flow.mjs` runs the setup wizard at phone size, imports `test/cba.csv`, sets a passcode and unlocks. Both use Playwright against a local server on port 8080.
+`test/smoke.mjs` walks every screen with sample data. `test/flow.mjs` runs the setup wizard at phone size, imports `test/cba.csv`, sets a passcode and unlocks. `test/embed.mjs` loads the dashboard inside `embed/demo.html` at desktop and phone size. All use Playwright against a local server on port 8080.
 
 ## Licence
 

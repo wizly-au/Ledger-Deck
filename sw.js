@@ -1,8 +1,8 @@
 /* Offline support. Only this app's own files are cached. Requests to AI providers are never touched. */
-const VERSION = 'ld-v1.0.0';
+const VERSION = 'ld-v1.1.0';
 const CORE = ['./', 'index.html', 'privacy.html', 'css/app.css', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png',
   'js/app.js', 'js/store.js', 'js/util.js', 'js/charts.js', 'js/ui.js', 'js/model.js', 'js/categories.js', 'js/importers.js', 'js/insights.js',
-  'js/tax.js', 'js/ai.js', 'js/ask.js', 'js/voice.js', 'js/sheets.js', 'js/demo.js', 'js/wizard.js',
+  'js/tax.js', 'js/ai.js', 'js/ask.js', 'js/voice.js', 'js/sheets.js', 'js/demo.js', 'js/wizard.js', 'js/embed.js',
   'js/views/briefing.js', 'js/views/personal.js', 'js/views/business.js', 'js/views/tax.js', 'js/views/whatif.js', 'js/views/data.js'];
 
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE))); });

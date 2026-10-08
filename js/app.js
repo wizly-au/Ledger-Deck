@@ -13,6 +13,7 @@ import './views/tax.js';
 import './views/whatif.js';
 import './views/data.js';
 import { sampleState } from './demo.js';
+import { applyEmbed } from './embed.js';
 
 const VIEWS = ['briefing', 'personal', 'business', 'tax', 'whatif', 'data'];
 const $ = id => document.getElementById(id);
@@ -68,7 +69,7 @@ function lockScreen() {
 }
 
 async function start() {
-  initTips();
+  applyEmbed(); initTips();
   const st = await load();
   if (st === 'locked') await lockScreen();
   wire(); initAsk(); updateChrome();
